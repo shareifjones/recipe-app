@@ -4,11 +4,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe App Homepage</title>
+    <title>Home - Recipe App</title>
+    <style>
+        /* Basic reset */
+        body,
+        h1,
+        p {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Main container */
+        .container {
+            text-align: center;
+            background-color: #f4f4f4;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+            padding: 20px;
+        }
+
+        /* Title */
+        h1 {
+            font-size: 3rem;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        /* Subtitle */
+        p {
+            font-size: 1.5rem;
+            color: #555;
+            margin-bottom: 40px;
+        }
+
+        /* Button */
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        /* Image styling */
+        .hero-image {
+            width: 80%;
+            /* Adjust the width as per your need */
+            max-width: 400px;
+            /* Max width to prevent it from getting too large */
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        /* Footer */
+        footer {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: #888;
+        }
+    </style>
 </head>
 
 <body>
-    Welcome to the Recipe App Homepage!
+    <!-- Load the static files tag -->
+    {% load static %}
+    <div class="container">
+        <!-- Hero Image -->
+        <img src="{% static 'recipes/images/recipe_app.jpg' %}" alt="Delicious Recipes" class="hero-image">
+
+        <h1>Welcome to the Recipe App</h1>
+        <p>Your one-stop place for amazing recipes!</p>
+        <a href="{% url 'recipes:recipes_list' %}" class="button">Explore Recipes</a>
+    </div>
+
 </body>
 
 </html>

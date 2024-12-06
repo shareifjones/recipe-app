@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe List</title>
+    <style>
+        /* Reset some default browser styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Set the body background color and text color */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            /* Stack the content vertically */
+        }
+
+        /* Center the container */
+        .container {
+            max-width: 1200px;
+            width: 90%;
+            text-align: center;
+        }
+
+        /* Style the heading */
+        h1 {
+            margin-bottom: 30px;
+            font-size: 36px;
+            color: #2d3e50;
+        }
+
+        /* Create a grid for recipe cards */
+        .recipe-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        /* Style the individual recipe cards */
+        .recipe-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Hover effect for recipe cards */
+        .recipe-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style the recipe images */
+        .recipe-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        /* Style the recipe difficulty text */
+        .recipe-difficulty {
+            font-size: 16px;
+            color: #777;
+            margin-bottom: 15px;
+        }
+
+        /* Style the 'View Details' link */
+        .view-details {
+            display: inline-block;
+            background-color: #2d3e50;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hover effect for 'View Details' */
+        .view-details:hover {
+            background-color: #1f2a36;
+        }
+
+        /* Style the 'Return to Home' button */
+        .return-home {
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #2d3e50;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hover effect for 'Return to Home' */
+        .return-home:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Recipe List</h1>
+
+        <!-- Button to return to home -->
+        <a href="{% url 'recipes:home' %}" class="return-home">Return to Home</a>
+
+        <div class="recipe-list">
+            {% for recipe in object_list %}
+            <div class="recipe-card">
+                <h3>{{ recipe.name }}</h3>
+                <img src="{{ recipe.pic.url }}" alt="{{ recipe.name }}" class="recipe-img">
+                <p class="recipe-difficulty">Difficulty: {{ recipe.difficulty }}</p>
+                <a href="{% url 'recipes:recipes_detail' pk=recipe.pk %}" class="view-details">View Details</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>
