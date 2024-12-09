@@ -120,8 +120,8 @@
     <div class="container">
         <h1>Recipe List</h1>
 
-        <!-- Button to return to home -->
-        <a href="{% url 'recipes:home' %}" class="return-home">Return to Home</a>
+        <!-- Button to logout-->
+        <a href="{% url 'logout' %}" class="return-home">Logout</a>
 
         <div class="recipe-list">
             {% for recipe in object_list %}
