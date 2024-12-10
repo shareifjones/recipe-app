@@ -41,6 +41,39 @@
             color: #2d3e50;
         }
 
+        /* Style the search form */
+        .search-form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-form input,
+        .search-form select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 250px;
+        }
+
+        .search-form button {
+            background-color: #2d3e50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-form button:hover {
+            background-color: #1f2a36;
+        }
+
         /* Create a grid for recipe cards */
         .recipe-list {
             display: grid;
@@ -120,11 +153,25 @@
     <div class="container">
         <h1>Recipe List</h1>
 
-        <!-- Button to logout-->
-        <a href="{% url 'success' %}" class="return-home">Logout</a>
+        <!-- Search Form -->
+        <form method="GET" class="search-form">
+            {{ form.as_p }}
+            <button type="submit" class="search-btn">Search</button>
+        </form>
 
+        {% if table %}
+        <!-- Display table only if there are search results -->
+        <div class="search-results">
+            <h2>Search Results</h2>
+            <div class="table-responsive">
+                {{ table|safe }}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Recipe Cards -->
         <div class="recipe-list">
-            {% for recipe in object_list %}
+            {% for recipe in recipes %}
             <div class="recipe-card">
                 <h3>{{ recipe.name }}</h3>
                 <img src="{{ recipe.pic.url }}" alt="{{ recipe.name }}" class="recipe-img">
@@ -134,6 +181,7 @@
             {% endfor %}
         </div>
     </div>
+
 </body>
 
 </html>
