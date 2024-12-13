@@ -119,6 +119,7 @@
             display: inline-block;
             background-color: #2d3e50;
             color: #fff;
+            margin-top: 10px;
             padding: 10px 20px;
             border-radius: 5px;
             text-decoration: none;
@@ -146,31 +147,102 @@
         .return-home:hover {
             background-color: #45a049;
         }
+
+        .chart-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .chart-container img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .logout-btn {
+            background-color: #2d3e50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hover effect for 'Logout' */
+        .logout-btn:hover {
+            background-color: #1f2a36;
+        }
+
+        /* Align search and logout buttons in a row */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
         <h1>Recipe List</h1>
+        <!-- Logout button -->
+        <div class="button-container">
+            <form method="GET" class="search-form">
+                <div>
+                    <label for="id_ingredient_name">Search by Ingredient:</label>
+                    {{ form.ingredient_name }}
+                </div>
+                <div>
+                    <label for="id_chart_type">Chart Type:</label>
+                    {{ form.chart_type }}
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+                <a href="{% url 'success' %}" class="logout-btn">Logout</a>
+            </form>
+        </div>
 
-        <!-- Search Form -->
-        <form method="GET" class="search-form">
-            {{ form.as_p }}
-            <button type="submit" class="search-btn">Search</button>
-        </form>
+        {% if filtered_recipes %}
+        <div class="recipe-list">
+            {% for recipe in filtered_recipes %}
+            <div class="recipe-card">
+                <h3>{{ recipe.name }}</h3>
+                <img src="{{ recipe.pic.url }}" alt="{{ recipe.name }}" class="recipe-img">
+                <p>Cooking Time: {{ recipe.cooking_time }} minutes</p>
+                <a href="{% url 'recipes:recipes_detail' pk=recipe.pk %}" class="view-details">View Details</a>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>No recipes found matching your search criteria.</p>
+        {% endif %}
 
-        {% if table %}
-        <!-- Display table only if there are search results -->
-        <div class="search-results">
+        {% if chart %}
+        <div class="chart-container">
+            <h2>Generated Chart</h2>
+            <img src="data:image/png;base64,{{ chart }}" alt="Chart">
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+
+</html>
+
+<!-- {% if table %} -->
+<!-- Display table only if there are search results -->
+<!-- <div class="search-results">
             <h2>Search Results</h2>
             <div class="table-responsive">
                 {{ table|safe }}
             </div>
         </div>
-        {% endif %}
+        {% endif %} -->
 
-        <!-- Recipe Cards -->
-        <div class="recipe-list">
+<!-- Recipe Cards -->
+<!-- <div class="recipe-list">
             {% for recipe in recipes %}
             <div class="recipe-card">
                 <h3>{{ recipe.name }}</h3>
@@ -179,9 +251,4 @@
                 <a href="{% url 'recipes:recipes_detail' pk=recipe.pk %}" class="view-details">View Details</a>
             </div>
             {% endfor %}
-        </div>
-    </div>
-
-</body>
-
-</html>
+        </div> -->

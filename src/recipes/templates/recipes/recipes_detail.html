@@ -82,8 +82,9 @@
         <li><strong>Cooking Time:</strong> {{ object.cooking_time }} minutes</li>
         <li><strong>Difficulty:</strong> {{ object.difficulty }}</li>
     </ul>
-
-    <a href="{% url 'recipes:recipes_list' %}">Back to Recipe List</a>
+    <div>
+        <a href="{% url 'recipes:recipes_list' %}">Back to Recipe List</a>
+    </div>
 </body>
 
 </html>

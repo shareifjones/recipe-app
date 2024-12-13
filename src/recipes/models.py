@@ -9,6 +9,8 @@ class Recipe(models.Model):
     cooking_time = models.IntegerField()
     difficulty = models.CharField(max_length=20, blank=True) # Optional or default value
     pic = models.ImageField(upload_to='recipes', default='no_picture.jpg')
+    created_date = models.DateTimeField(auto_now_add=True)
+
 
 
     
