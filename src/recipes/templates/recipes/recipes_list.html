@@ -192,6 +192,12 @@
         <div class="button-container">
             <form method="GET" class="search-form">
                 <div>
+                    <label for="id_ingredient_name">Search by Recipe:</label>
+                    {{ form.recipe_name }}
+
+                </div>
+
+                <div>
                     <label for="id_ingredient_name">Search by Ingredient:</label>
                     {{ form.ingredient_name }}
                 </div>
@@ -203,6 +209,11 @@
                 <a href="{% url 'success' %}" class="logout-btn">Logout</a>
             </form>
         </div>
+        {% if request.GET.recipe_name or request.GET.ingredient_name %}
+        <div class="return-list">
+            <a href="{% url 'recipes:recipes_list' %}" class="btn btn-secondary">Return to Recipe List</a>
+        </div>
+        {% endif %}
 
         {% if filtered_recipes %}
         <div class="recipe-list">

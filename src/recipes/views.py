@@ -10,6 +10,7 @@ from io import BytesIO
 import base64
 import matplotlib.pyplot as plt
 from django.http import JsonResponse
+from django.contrib import messages
 
 # Home View
 def home(request):
@@ -69,16 +70,27 @@ class RecipeListView(LoginRequiredMixin, ListView):
             # Filter recipes based on search criteria
             if recipe_name:
                 queryset = queryset.filter(name__icontains=recipe_name)
+            print(f"Filtered by recipe_name: {queryset}")
             if ingredient_name:
                 queryset = queryset.filter(ingredients__icontains=ingredient_name)
+            print(f"Filtered by ingredient_name: {queryset}")
+
+
+            # context['recipes'] = queryset
 
             # Generate chart if recipes exist and a chart type is selected
-            recipes_df = pd.DataFrame.from_records(
-                queryset.values('name', 'cooking_time', 'difficulty', 'created_date')
-            )
-            if not recipes_df.empty and chart_type:
-                chart = get_chart(chart_type, recipes_df)
-                context['chart'] = chart
+             # Check if a chart type is selected
+            if chart_type:
+                recipes_df = pd.DataFrame.from_records(
+                    queryset.values('name', 'cooking_time', 'difficulty', 'created_date')
+                )
+                if not recipes_df.empty:
+                    chart = get_chart(chart_type, recipes_df)
+                    context['chart'] = chart
+            else:
+                # Optional: Add a message to prompt the user
+                messages.warning(self.request, "Please select a chart type to generate a chart.")
+
 
         # Update context with recipes
         context['filtered_recipes'] = queryset
