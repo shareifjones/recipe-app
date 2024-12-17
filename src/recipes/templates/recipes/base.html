@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Recipe App{% endblock %}</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        header {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #ffffff;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+
+        main {
+            margin: 20px;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>My Recipe App</h1>
+        <nav>
+            <a href="{% url 'recipes:recipes_list' %}">Recipe List</a>
+            <a href="{% url 'recipes:add_recipe' %}">Add Recipe</a>
+            <a href="{% url 'success' %}">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Content from child templates goes here -->
+        {% endblock %}
+    </main>
+
+</body>
+
+</html>

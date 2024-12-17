@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView 
 from .models import Recipe
-from .forms import RecipesSearchForm
+from .forms import RecipesSearchForm, RecipeForm
 import pandas as pd
 from django.utils.safestring import mark_safe
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,6 +11,7 @@ import base64
 import matplotlib.pyplot as plt
 from django.http import JsonResponse
 from django.contrib import messages
+from django.views import View
 
 # Home View
 def home(request):
@@ -104,3 +105,20 @@ class RecipeListView(LoginRequiredMixin, ListView):
 class RecipeDetailView(LoginRequiredMixin, DetailView):
     model = Recipe
     template_name = 'recipes/recipes_detail.html'
+
+
+class AddRecipeView(LoginRequiredMixin, View):
+    template_name = 'recipes/add_recipe.html'
+
+    def get(self, request):
+        form = RecipeForm()
+        return render(request, self.template_name, {'form': form})  # Pass as a dictionary
+
+    def post(self, request):
+        form = RecipeForm(request.POST, request.FILES)
+        if form.is_valid():
+            recipe = form.save(commit=False)
+            recipe.save()  # Save recipe to the database
+            return redirect('recipes:recipes_list')  # Redirect to the recipe list
+        return render(request, self.template_name, {'form': form})  # Pass as a dictionary
+

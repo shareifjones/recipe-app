@@ -208,6 +208,10 @@
                 <button type="submit" class="btn btn-primary">Search</button>
                 <a href="{% url 'success' %}" class="logout-btn">Logout</a>
             </form>
+
+        </div>
+        <div>
+            <a href="{% url 'recipes:add_recipe' %}" class="btn btn-secondary">Add Recipe</a>
         </div>
         {% if request.GET.recipe_name or request.GET.ingredient_name %}
         <div class="return-list">
@@ -229,6 +233,7 @@
         {% else %}
         <p>No recipes found matching your search criteria.</p>
         {% endif %}
+        <!-- <a href="{% url 'recipes:add_recipe' %}" class="btn btn-secondary">Add Recipe</a> -->
 
         {% if chart %}
         <div class="chart-container">
