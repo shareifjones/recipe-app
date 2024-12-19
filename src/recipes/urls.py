@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import home, RecipeDetailView, RecipeListView, get_chart, AddRecipeView
+from . import views
 
 app_name = 'recipes'
 
@@ -9,4 +10,6 @@ urlpatterns = [
     path('list/', RecipeListView.as_view(), name='recipes_list'),
     path("generate-chart/", get_chart, name="generate_chart"),
     path('add/', AddRecipeView.as_view(), name='add_recipe'),
+    path('about/', views.about_me, name='about_me'),
+
 ]

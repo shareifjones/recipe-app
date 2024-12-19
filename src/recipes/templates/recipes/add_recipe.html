@@ -1,8 +1,16 @@
 {% extends 'recipes/base.html' %}
 
+{% load static %}
+
+
 {% block title %}Add Recipe{% endblock %}
 
 {% block content %}
+
+<head>
+    <title>Add Recipe</title>
+    <link rel="icon" href="{% static 'recipes/images/recipe_app.jpg' %}" type="image/x-icon">
+</head>
 <div
     style="max-width: 800px; margin: 50px auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
     <h1 style="text-align: center; color: #333; margin-bottom: 20px; font-size: 2rem;">Add a New Recipe</h1>

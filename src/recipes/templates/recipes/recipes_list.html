@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,6 +7,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipe List</title>
+    <link rel="icon" href="{% static 'recipes/images/recipe_app.jpg' %}" type="image/x-icon">
+
+    <!-- <img src="{% static 'recipes/images/recipe_app.jpg' %}" alt="Delicious Recipes" class="hero-image"> -->
     <style>
         /* Reset some default browser styling */
         * {
@@ -182,6 +187,22 @@
             gap: 10px;
             margin-bottom: 20px;
         }
+
+        footer .btn {
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        footer .btn:hover {
+            background-color: #1f2a36;
+        }
     </style>
 </head>
 
@@ -210,9 +231,10 @@
             </form>
 
         </div>
-        <div>
-            <a href="{% url 'recipes:add_recipe' %}" class="btn btn-secondary">Add Recipe</a>
+        <div class="button-container">
+            <a href="{% url 'recipes:add_recipe' %}" class="btn btn-primary">Add Recipe Here</a>
         </div>
+
         {% if request.GET.recipe_name or request.GET.ingredient_name %}
         <div class="return-list">
             <a href="{% url 'recipes:recipes_list' %}" class="btn btn-secondary">Return to Recipe List</a>
@@ -244,6 +266,13 @@
     </div>
 
 </body>
+<footer>
+    <div class="button-container">
+        <a href="{% url 'recipes:about_me' %}" class="btn btn-secondary">About The Developer</a>
+    </div>
+</footer>
+
+
 
 </html>
 

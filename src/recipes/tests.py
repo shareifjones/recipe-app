@@ -118,3 +118,85 @@ class HomePageTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'recipes/recipes_home.html')
 
+
+class AddRecipeViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create_user(username='testuser', password='password')
+
+    def setUp(self):
+        self.client.login(username='testuser', password='password')
+
+    def test_add_recipe_view_accessible(self):
+        response = self.client.get(reverse('recipes:add_recipe'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'recipes/add_recipe.html')
+
+    def test_add_recipe_form_submission_valid(self):
+        response = self.client.post(reverse('recipes:add_recipe'), {
+            'name': 'Test Recipe',
+            'ingredients': 'Ingredient1, Ingredient2',
+            'cooking_time': 30,
+            'difficulty': 'Easy',
+            'pic': ''  # Add a valid file path if testing with media
+        })
+        self.assertEqual(response.status_code, 302)  # Should redirect after successful submission
+        self.assertTrue(Recipe.objects.filter(name='Test Recipe').exists())
+
+    def test_add_recipe_form_submission_invalid(self):
+        response = self.client.post(reverse('recipes:add_recipe'), {
+            'name': '',  # Missing name
+            'ingredients': '',
+            'cooking_time': '',
+            'difficulty': ''
+        })
+        self.assertEqual(response.status_code, 200)  # Should not redirect
+        self.assertFormError(response, 'form', 'name', 'This field is required.')
+
+
+class AboutMeViewTest(TestCase):
+    def test_about_me_view_accessible(self):
+        response = self.client.get(reverse('recipes:about_me'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'recipes/about_me.html')
+
+
+class ChartRenderingTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create_user(username='testuser', password='password')
+        cls.recipe1 = Recipe.objects.create(
+            name="Pasta", ingredients="noodles, sauce", cooking_time=20, difficulty="Easy"
+        )
+        cls.recipe2 = Recipe.objects.create(
+            name="Pizza", ingredients="dough, cheese, sauce", cooking_time=30, difficulty="Medium"
+        )
+
+    def setUp(self):
+        self.client.login(username='testuser', password='password')
+
+    def test_bar_chart_generation(self):
+        response = self.client.get(reverse('recipes:recipes_list'), {
+            'chart_type': '#1',  # Bar Chart
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('chart', response.context)
+        self.assertContains(response, '<img src="data:image/png;base64', html=True)
+
+    def test_pie_chart_generation(self):
+        response = self.client.get(reverse('recipes:recipes_list'), {
+            'chart_type': '#2',  # Pie Chart
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('chart', response.context)
+        self.assertContains(response, '<img src="data:image/png;base64', html=True)
+
+    def test_line_chart_generation(self):
+        response = self.client.get(reverse('recipes:recipes_list'), {
+            'chart_type': '#3',  # Line Chart
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('chart', response.context)
+        self.assertContains(response, '<img src="data:image/png;base64', html=True)
+
+

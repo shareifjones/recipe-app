@@ -28,6 +28,8 @@ def get_chart(chart_type, data):
         plt.title('Cooking Time by Recipe')
         plt.xlabel('Recipes')
         plt.ylabel('Cooking Time (minutes)')
+        plt.xticks(rotation=45, ha='right', fontsize=10)
+        plt.tight_layout()  # Automatically adjust spacing to prevent cutoff
     elif chart_type == '#2':  # Pie Chart for Recipe Difficulty
         difficulty_counts = data['difficulty'].value_counts()
         ax.pie(difficulty_counts, labels=difficulty_counts.index, autopct='%1.1f%%')
@@ -121,4 +123,7 @@ class AddRecipeView(LoginRequiredMixin, View):
             recipe.save()  # Save recipe to the database
             return redirect('recipes:recipes_list')  # Redirect to the recipe list
         return render(request, self.template_name, {'form': form})  # Pass as a dictionary
+
+def about_me(request):
+    return render(request, 'recipes/about_me.html')
 
