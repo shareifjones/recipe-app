@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','django-insecure-ml49cp(e)=yakpe
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://agile-depths-27304-c2c05344f63c.herokuapp.com/']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://agile-depths-27304-c2c05344f63c.herokuapp.com']
 
 
 
@@ -39,8 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #recipe-related apps
-    'recipes'
+    'src.recipes',
 ]
 
 MIDDLEWARE = [
@@ -124,7 +123,7 @@ STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT= BASE_DIR / 'media'
 STATICFILES_DIRS=[
-   BASE_DIR / '/Users/shareifjones/Documents/Bootcamp/recipe-app/src/recipes/static'
+   BASE_DIR / 'src/recipes/static'
 ]
 # The absolute path to the directory where collectstatic will collect static files for deployment.
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
