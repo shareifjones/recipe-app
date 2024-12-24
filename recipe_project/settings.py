@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','django-insecure-ml49cp(e)=yakpe
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://agile-depths-27304-c2c05344f63c.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'agile-depths-27304-c2c05344f63c.herokuapp.com']
 
 
 
@@ -123,10 +123,10 @@ STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT= BASE_DIR / 'media'
 STATICFILES_DIRS=[
-   BASE_DIR / 'src/recipes/static'
+   BASE_DIR / 'static'
 ]
 # The absolute path to the directory where collectstatic will collect static files for deployment.
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -139,5 +139,7 @@ LOGIN_URL='/login/'
 
 # Heroku: Update database configuration from $DATABASE_URL.
 import dj_database_url
+if os.environ.get('DATABASE_URL'):
+    DATABASES['default'] = dj_database_url.config(conn_max_age=500)
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
